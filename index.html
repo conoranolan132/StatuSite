@@ -23,8 +23,21 @@
       try {
         const res = await fetch(WORKER_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const html = await res.text();
-        document.getElementById('output').innerHTML = html;
+    
+        // Parse JSON, NOT text
+        const obj = await res.json();
+    
+        let rows = '';
+        for (const key in obj) {
+          rows += `<tr><td>${key}</td><td>${obj[key]}</td></tr>`;
+        }
+    
+        document.getElementById('output').innerHTML = `
+          <table border="1" cellpadding="5">
+            <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
         document.getElementById('status').textContent = 'Data updated.';
       } catch (err) {
         document.getElementById('status').textContent = 'Error fetching data: ' + err;
