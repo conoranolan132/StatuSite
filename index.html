@@ -24,8 +24,6 @@ async function fetchData() {
         const res = await fetch(WORKER_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();  // <-- parse JSON properly
-        JSON.parse(data);
-        console.log(data);
 
         // Build table rows dynamically
         let rows = '';
