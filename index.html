@@ -32,7 +32,7 @@ async function fetchData() {
             for (const key2 in data[key1]) {
                 tables += `<tr><td>${key2}</td><td>${data[key1][key2]}</td></tr>`;
             }
-          tables += `</table>
+          tables += `</table>`;
         }
 
         document.getElementById('output').innerHTML = `
