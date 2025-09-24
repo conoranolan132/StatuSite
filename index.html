@@ -1,65 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Message board (static + Worker)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Live Data Display</title>
   <style>
-    body { font-family: system-ui, Arial; padding: 18px; max-width: 720px; margin: auto; }
-    #output { border: 1px solid #ddd; padding:12px; min-height:80px; white-space:pre-wrap; }
-    .small { font-size:0.9rem; color:#555; }
-    textarea { width:100%; height:100px; }
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 50%; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    #status { margin-bottom: 10px; }
   </style>
 </head>
 <body>
-  <h1>Live Message</h1>
-  <div id="output">Loading…</div>
-  <p class="small">This page reads content from the API and displays it.</p>
-
-  <h2>(Optional) Update message from this page</h2>
-  <p class="small">You can update the message from here if you enter the secret token (insecure if you put token into this page — better to use curl or a server).</p>
-  <textarea id="newText" placeholder="Type new message..."></textarea>
-  <div style="margin-top:8px">
-    <input id="tokenField" placeholder="Bearer token" style="width:60%" />
-    <button id="updateBtn">PUT message</button>
-  </div>
+  <h1>Latest Data</h1>
+  <div id="status">Fetching data...</div>
+  <div id="output"></div>
 
   <script>
-    const WORKER_URL = 'https://stausite-api.conornolan132.workers.dev/message'; // <- replace with your Worker URL
+    const WORKER_URL = "https://stausite-api.conornolan132.workers.dev/message"; // <-- replace this
 
-    async function fetchMessage(){
-      const res = await fetch(WORKER_URL);
-      const html = await res.text();
-      document.getElementById('output').innerHTML = html;
-    }
-
-    async function putMessage(token, content){
-      const res = await fetch(WORKER_URL, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'text/plain',
-          'Authorization': token ? ('Bearer '+token) : ''
-        },
-        body: content
-      });
-      return res;
-    }
-
-    document.getElementById('updateBtn').addEventListener('click', async () => {
-      const txt = document.getElementById('newText').value;
-      const token = document.getElementById('tokenField').value;
-      const r = await putMessage(token, txt);
-      if (r.ok) {
-        alert('Updated!');
-        fetchMessage();
-      } else {
-        alert('Update failed: ' + r.status + ' ' + (await r.text()));
+    async function fetchData() {
+      try {
+        const res = await fetch(WORKER_URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const html = await res.text();
+        document.getElementById('output').innerHTML = html;
+        document.getElementById('status').textContent = 'Data updated.';
+      } catch (err) {
+        document.getElementById('status').textContent = 'Error fetching data: ' + err;
+        document.getElementById('output').innerHTML = '';
       }
-    });
+    }
 
-    // initial load + periodic refresh
-    fetchMessage();
-    setInterval(fetchMessage, 5000); // poll every 5s (simple)
+    // Initial fetch
+    fetchData();
+
+    // Refresh every 10 seconds
+    setInterval(fetchData, 10000);
   </script>
 </body>
 </html>
