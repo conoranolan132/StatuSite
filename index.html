@@ -35,7 +35,7 @@ async function fetchData() {
                 }
             }
             if (data[key1].hasOwnProperty("progress")) {
-                tables += `<progress max="1" value=data[key1]["progress"]></progress>`;
+                tables += `<progress max="1" value=data[key1]["progress"]>${data[key1]["progress"]*100}%</progress>`;
             }
           tables += `</table>`;
         }
