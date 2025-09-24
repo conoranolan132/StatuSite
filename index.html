@@ -24,12 +24,11 @@ async function fetchData() {
         const res = await fetch(WORKER_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();  // <-- parse JSON properly
-        console.log(data);
+        console.log(data.temperature);
 
         // Build table rows dynamically
         let rows = '';
         for (const key in data) {
-            console.log(key);
             rows += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
         }
 
