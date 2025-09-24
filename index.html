@@ -43,7 +43,7 @@ async function fetchData() {
         document.getElementById('output').innerHTML = `
             ${tables}
         `;
-        document.getElementById('status').textContent = `Data updated ${Date().toLocaleTimeString()}`;
+        document.getElementById('status').textContent = 'Data updated.';
     } catch (err) {
         document.getElementById('status').textContent = 'Error fetching data: ' + err;
         document.getElementById('output').innerHTML = '';
