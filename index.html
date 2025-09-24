@@ -28,14 +28,9 @@
     const WORKER_URL = 'https://stausite-api.conornolan132.workers.dev/'; // <- replace with your Worker URL
 
     async function fetchMessage(){
-      try {
-        const res = await fetch(WORKER_URL);
-        if (!res.ok) throw new Error('Network error: '+res.status);
-        const text = await res.text();
-        document.getElementById('output').textContent = text || '(empty)';
-      } catch (e) {
-        document.getElementById('output').textContent = 'Error: ' + e.message;
-      }
+      const res = await fetch(WORKER_URL);
+      const html = await res.text();
+      document.getElementById('output').innerHTML = html;
     }
 
     async function putMessage(token, content){
