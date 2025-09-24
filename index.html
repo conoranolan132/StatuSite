@@ -26,18 +26,17 @@ async function fetchData() {
         const data = await res.json();  // <-- parse JSON properly
 
         // Build table rows dynamically
-        let rows = '';
-        for (const key in data) {
-            rows += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
+        let tables = '';
+        for (const key1 in data) {
+            tables += `<table><thead><tr><th>Variable</th><th>Value</th></tr></thead>`;
+            for (const key2 in data[key1]) {
+                tables += `<tr><td>${key2}</td><td>${data[key1][key2]}</td></tr>`;
+            }
+          tables += `</table>
         }
 
         document.getElementById('output').innerHTML = `
-            <table>
-                <thead>
-                    <tr><th>Variable</th><th>Value</th></tr>
-                </thead>
-                <tbody>${rows}</tbody>
-            </table>
+            ${tables}
         `;
         document.getElementById('status').textContent = 'Data updated.';
     } catch (err) {
