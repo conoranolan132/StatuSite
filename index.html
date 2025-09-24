@@ -23,8 +23,8 @@ async function fetchData() {
     try {
         const res = await fetch(WORKER_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        console.log(res);
         const data = await res.json();  // <-- parse JSON properly
+        console.log(data);
 
         // Build table rows dynamically
         let rows = '';
