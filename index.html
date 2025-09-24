@@ -1,55 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Live Data Display</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { border-collapse: collapse; width: 50%; }
-    th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
-    #status { margin-bottom: 10px; }
-  </style>
+<meta charset="UTF-8">
+<title>Live MATLAB Data</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  table { border-collapse: collapse; width: 50%; }
+  th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+  th { background-color: #f2f2f2; }
+  #status { margin-bottom: 10px; }
+</style>
 </head>
 <body>
-  <h1>Latest Data</h1>
-  <div id="status">Fetching data...</div>
-  <div id="output"></div>
+<h1>Latest MATLAB Variables</h1>
+<div id="status">Fetching data...</div>
+<div id="output"></div>
 
-  <script>
-    const WORKER_URL = "https://stausite-api.conornolan132.workers.dev/message"; // <-- replace this
+<script>
+const WORKER_URL = "https://<worker-name>.<account>.workers.dev/message"; // <-- replace
 
-    async function fetchData() {
-      try {
+async function fetchData() {
+    try {
         const res = await fetch(WORKER_URL);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    
-        // Parse JSON, NOT text
-        const obj = await res.json();
-    
+        const data = await res.json();  // <-- parse JSON properly
+
+        // Build table rows dynamically
         let rows = '';
-        for (const key in obj) {
-          rows += `<tr><td>${key}</td><td>${obj[key]}</td></tr>`;
+        for (const key in data) {
+            rows += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
         }
-    
+
         document.getElementById('output').innerHTML = `
-          <table border="1" cellpadding="5">
-            <thead><tr><th>Variable</th><th>Value</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
+            <table>
+                <thead>
+                    <tr><th>Variable</th><th>Value</th></tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
         `;
         document.getElementById('status').textContent = 'Data updated.';
-      } catch (err) {
+    } catch (err) {
         document.getElementById('status').textContent = 'Error fetching data: ' + err;
         document.getElementById('output').innerHTML = '';
-      }
     }
+}
 
-    // Initial fetch
-    fetchData();
-
-    // Refresh every 10 seconds
-    setInterval(fetchData, 10000);
-  </script>
+// Initial fetch and refresh every 10 seconds
+fetchData();
+setInterval(fetchData, 10000);
+</script>
 </body>
 </html>
