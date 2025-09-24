@@ -29,6 +29,7 @@ async function fetchData() {
         // Build table rows dynamically
         let rows = '';
         for (const key in data) {
+            console.log(key);
             rows += `<tr><td>${key}</td><td>${data[key]}</td></tr>`;
         }
 
