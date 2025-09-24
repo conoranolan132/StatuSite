@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-<h1>Latest MATLAB Variables</h1>
+<h1>Latest MATLAB Experiments</h1>
 <div id="status">Fetching data...</div>
 <div id="output"></div>
 
@@ -28,7 +28,7 @@ async function fetchData() {
         // Build table rows dynamically
         let tables = '';
         for (const key1 in data) {
-            tables += `<table><thead><tr><th>Variable</th><th>Value</th></tr></thead>`;
+            tables += `<h2>${key1}</h2><br><table><thead><tr><th>Variable</th><th>Value</th></tr></thead>`;
             for (const key2 in data[key1]) {
                 tables += `<tr><td>${key2}</td><td>${data[key1][key2]}</td></tr>`;
             }
@@ -45,7 +45,6 @@ async function fetchData() {
     }
 }
 
-// Initial fetch and refresh every 10 seconds
 fetchData();
 setInterval(fetchData, 10000);
 </script>
