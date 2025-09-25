@@ -36,7 +36,7 @@ async function fetchData() {
             }
             tables += `</table>`;
             if (data[key1].hasOwnProperty("progress")) {
-                tables += `<label>Progress:</label><progress value=data[key1]["progress"].parseFloat()>${data[key1]["progress"]*100}%</progress>`;
+                tables += `<label>Progress:</label><progress value=${data[key1]["progress"]}>${data[key1]["progress"]*100}%</progress>`;
             }
         }
 
