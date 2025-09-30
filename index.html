@@ -10,6 +10,7 @@
   th { background-color: #ffffff; color: #B70062; }
   h2 { color: #361163; }
   #status { margin-bottom: 10px; }
+  #progress { padding: 10px; }
   #variable_header { background-color: #B70062; color: #ffffff; }
 </style>
 </head>
@@ -38,7 +39,7 @@ async function fetchData() {
             }
             tables += `</table>`;
             if (data[experiment].hasOwnProperty("progress")) {
-                tables += `<label>Progress:</label><progress value=${data[experiment]["progress"]["value"]}>${data[experiment]["progress"]["value"]*100}%</progress>`;
+                tables += `<div id="progress"><label>Progress:</label><progress value=${data[experiment]["progress"]["value"]}>${data[experiment]["progress"]["value"]*100}%</progress></div>`;
             }
         }
 
