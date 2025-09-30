@@ -8,6 +8,7 @@
   table { border-collapse: collapse; width: 50%; }
   th, td { border: 1px solid #361163; border-left: none; border-right: none; border-collapse: collapse; padding: 8px; text-align: left; }
   th { background-color: #ffffff; color: #B70062; }
+  h2 { color: #361163; }
   #status { margin-bottom: 10px; }
   #variable_header { background-color: #B70062; color: #ffffff; }
 </style>
@@ -29,7 +30,7 @@ async function fetchData() {
         // Build table rows dynamically
         let tables = '';
         for (const experiment in data) {
-            tables += `<h2>${data[experiment]["name"]}</h2><table><thead><tr><th>Variable</th><th id="variable_header">Value</th></tr></thead>`;
+            tables += `<h2>${data[experiment]["name"]}</h2><table><thead><tr><th>Parameter</th><th id="variable_header">Value</th></tr></thead>`;
             for (const parameter in data[experiment]) {
                 if (parameter != "progress" && parameter != "name") {
                     tables += `<tr><td>${data[experiment][parameter]["name"]}</td><td>${data[experiment][parameter]["value"]}</td></tr>`;
