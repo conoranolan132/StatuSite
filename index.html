@@ -28,15 +28,15 @@ async function fetchData() {
         // Build table rows dynamically
         let tables = '';
         for (const experiment in data) {
-            tables += `<h2>${experiment["name"]}</h2><table><thead><tr><th>Variable</th><th>Value</th></tr></thead>`;
+            tables += `<h2>${data[experiment]["name"]}</h2><table><thead><tr><th>Variable</th><th>Value</th></tr></thead>`;
             for (const parameter in data[experiment]) {
                 if (parameter != "progress" && parameter != "name") {
-                    tables += `<tr><td>${parameter}</td><td>${data[experiment][parameter]}</td></tr>`;
+                    tables += `<tr><td>${data[experiment][parameter]["name"]}</td><td>${data[experiment][parameter]["value"]}</td></tr>`;
                 }
             }
             tables += `</table>`;
             if (data[experiment].hasOwnProperty("progress")) {
-                tables += `<label>Progress:</label><progress value=${data[experiment]["progress"]}>${data[experiment]["progress"]*100}%</progress>`;
+                tables += `<label>Progress:</label><progress value=${data[experiment]["progress"]["value"]}>${data[experiment]["progress"]["value"]*100}%</progress>`;
             }
         }
 
